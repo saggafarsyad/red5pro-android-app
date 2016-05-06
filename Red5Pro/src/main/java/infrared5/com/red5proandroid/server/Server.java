@@ -2,6 +2,7 @@ package infrared5.com.red5proandroid.server;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,10 +13,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import infrared5.com.red5proandroid.Main;
 import infrared5.com.red5proandroid.R;
+import infrared5.com.red5proandroid.help.HelpDialogFragment;
 
 /**
  * Created by kylekellogg on 4/21/16.
@@ -26,6 +29,7 @@ public class Server extends Activity {
     private EditText portText;
 
     private TextView errorText;
+    private DialogFragment helpDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,15 @@ public class Server extends Activity {
             }
         });
 
+        final ImageButton help = (ImageButton) findViewById(R.id.btnHelp);
+        help.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showHelp();
+            }
+        });
+
+        helpDialog = HelpDialogFragment.newInstance();
+
         serverText = (EditText) findViewById(R.id.serverTextField);
         portText = (EditText) findViewById(R.id.portTextField);
 
@@ -58,6 +71,10 @@ public class Server extends Activity {
         portText.setText(storedPort);
 
         errorText = (TextView) findViewById(R.id.serverErrorText);
+    }
+
+    private void showHelp() {
+        helpDialog.show(getFragmentManager().beginTransaction(), "help_dialog");
     }
 
     private String getPreferenceValue(int id) {
