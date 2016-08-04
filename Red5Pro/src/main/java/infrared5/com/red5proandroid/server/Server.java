@@ -67,7 +67,8 @@ public class Server extends Activity {
             serverText.setText(storedServer);
         }
 
-        String storedPort = preferences.getString((getPreferenceValue(R.string.preference_port)), "8554");
+        Integer port = getIntPreferenceValue(R.string.preference_port);
+        String storedPort = preferences.getString(String.valueOf(port), "8554");
         portText.setText(storedPort);
 
         errorText = (TextView) findViewById(R.id.serverErrorText);
@@ -77,6 +78,10 @@ public class Server extends Activity {
 
     private String getPreferenceValue(int id) {
         return getResources().getString(id);
+    }
+
+    private Integer getIntPreferenceValue(int id) {
+        return getResources().getInteger(id);
     }
 
     private void onSubmit() {
